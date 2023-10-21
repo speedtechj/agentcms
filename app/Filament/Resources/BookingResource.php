@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Columns\Layout\Split;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use App\Filament\Resources\BookingResource\Pages;
@@ -93,9 +94,15 @@ class BookingResource extends Resource
     {
         return $table
             ->columns([
+                Split::make([
                 Tables\Columns\TextColumn::make('booking_invoice')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('sender.mobile_no')
+                Tables\Columns\TextColumn::make('sender.full_name'),
+                Tables\Columns\TextColumn::make('senderaddress.address')
+                    ->sortable(),
+                    Tables\Columns\TextColumn::make('senderaddress.quadrant')
+                    ->sortable(),
+                    Tables\Columns\TextColumn::make('sender.mobile_no')
                     ->label('Mobile Number')
                     ->url(fn (Booking $record) => "tel:{$record->sender->mobile_no}")
                     ->color('info')
@@ -104,9 +111,6 @@ class BookingResource extends Resource
                     ->label('Home Number')
                     ->url(fn (Booking $record) => "tel:{$record->sender->home_no}")
                     ->color('info')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('senderaddress.address')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('boxtype.description')
                     ->numeric()
@@ -136,7 +140,7 @@ class BookingResource extends Resource
                     Tables\Columns\TextColumn::make('user.full_name')
                     ->label('Agent Name')
                     ->sortable(),
-
+                    ])->from('sm')
             ])
             ->filters([
                 Filter::make('is_pickup')
