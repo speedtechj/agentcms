@@ -127,9 +127,7 @@ class BookingResource extends Resource
                 Tables\Columns\TextColumn::make('discount_id')
                     ->money('USD')
                     ->sortable(),
-                Tables\Columns\ToggleColumn::make('is_pickup'),
-                Tables\Columns\TextColumn::make('total_price')
-                    ->money('USD')
+                Tables\Columns\ToggleColumn::make('is_pickup')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_inches')
                     ->numeric()
@@ -139,9 +137,11 @@ class BookingResource extends Resource
                 Tables\Columns\TextColumn::make('extracharge_amount')
                     ->numeric()
                     ->sortable(),
-                    Tables\Columns\TextColumn::make('user.full_name')
-                    ->label('Agent Name')
-                    ->sortable(),
+                    // Tables\Columns\TextColumn::make('user.full_name')
+                    // ->label('Agent Name')
+                    // ->sortable(),
+                    Tables\Columns\TextColumn::make('payment_balance')
+                    ->money('USD')
                     ])->from('sm')
             ])
             ->filters([
