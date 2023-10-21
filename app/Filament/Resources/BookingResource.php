@@ -99,8 +99,10 @@ class BookingResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('sender.full_name'),
                 Tables\Columns\TextColumn::make('senderaddress.address')
+                    ->label('Address')
                     ->sortable(),
                     Tables\Columns\TextColumn::make('senderaddress.quadrant')
+                    ->label('Quadrant')
                     ->sortable(),
                     Tables\Columns\TextColumn::make('sender.mobile_no')
                     ->label('Mobile Number')
