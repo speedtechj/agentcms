@@ -23,7 +23,7 @@ class StatsOverview extends BaseWidget
             ->where('booking_date', now()->format('Y-m-d'))
             ->where('agent_id', auth()->user()->id)
             ->count())
-            ->description('Not up Today')
+            ->description('Not Pickup Today')
             ->descriptionIcon('heroicon-m-arrow-trending-up')
             ->chart([7, 2, 10, 3, 15, 4, 17])
             ->color('info'),
