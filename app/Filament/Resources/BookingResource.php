@@ -165,7 +165,7 @@ class BookingResource extends Resource
                 ->form([
                     Forms\Components\Select::make('agent_id')
                         ->label('Status')
-                        ->options(User::where('agent_type',1)->pluck('full_name', 'id'))
+                        ->options(User::where('agent_type', 1)->pluck('full_name', 'id'))
                         ->searchable()
                         ->placeholder('Select Agent')
                         ->preload()
