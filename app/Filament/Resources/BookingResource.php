@@ -14,6 +14,7 @@ use Filament\Tables\Actions\BulkAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\Layout\Split;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Actions\BulkActionGroup;
 use Illuminate\Database\Eloquent\Collection;
 use App\Filament\Resources\BookingResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -95,63 +96,63 @@ class BookingResource extends Resource
         return $table
             ->columns([
                 Split::make([
-                Tables\Columns\TextColumn::make('booking_invoice')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('sender.full_name'),
-                Tables\Columns\TextColumn::make('senderaddress.address')
-                    ->label('Address')
-                    ->sortable(),
+                    Tables\Columns\TextColumn::make('booking_invoice')
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('sender.full_name'),
+                    Tables\Columns\TextColumn::make('senderaddress.address')
+                        ->label('Address')
+                        ->sortable(),
                     Tables\Columns\TextColumn::make('senderaddress.quadrant')
-                    ->label('Quadrant')
-                    ->sortable(),
+                        ->label('Quadrant')
+                        ->sortable(),
                     Tables\Columns\TextColumn::make('sender.mobile_no')
-                    ->label('Mobile Number')
-                    ->url(fn (Booking $record) => "tel:{$record->sender->mobile_no}")
-                    ->color('info')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('sender.home_no')
-                    ->label('Home Number')
-                    ->url(fn (Booking $record) => "tel:{$record->sender->home_no}")
-                    ->color('info')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('boxtype.description')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('user.full_name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('booking_date')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('start_time'),
-                Tables\Columns\TextColumn::make('end_time'),
-                Tables\Columns\TextColumn::make('discount_id')
-                    ->money('USD')
-                    ->sortable(),
-                Tables\Columns\ToggleColumn::make('is_pickup')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('total_inches')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('dimension')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('extracharge_amount')
-                    ->numeric()
-                    ->sortable(),
+                        ->label('Mobile Number')
+                        ->url(fn (Booking $record) => "tel:{$record->sender->mobile_no}")
+                        ->color('info')
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('sender.home_no')
+                        ->label('Home Number')
+                        ->url(fn (Booking $record) => "tel:{$record->sender->home_no}")
+                        ->color('info')
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('boxtype.description')
+                        ->numeric()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('user.full_name')
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('booking_date')
+                        ->date()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('start_time'),
+                    Tables\Columns\TextColumn::make('end_time'),
+                    Tables\Columns\TextColumn::make('discount_id')
+                        ->money('USD')
+                        ->sortable(),
+                    Tables\Columns\ToggleColumn::make('is_pickup')
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('total_inches')
+                        ->numeric()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('dimension')
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('extracharge_amount')
+                        ->numeric()
+                        ->sortable(),
                     // Tables\Columns\TextColumn::make('user.full_name')
                     // ->label('Agent Name')
                     // ->sortable(),
                     Tables\Columns\TextColumn::make('payment_balance')
-                    ->money('USD')
-                    ])->from('sm')
+                        ->money('USD')
+                ])->from('sm')
             ])
             ->filters([
                 Filter::make('is_pickup')
                     ->label('Not Pickup')
                     ->query(fn (Builder $query): Builder => $query->where('is_pickup', false))->default('false'),
-                    Filter::make('created_at')
+                Filter::make('created_at')
                     ->form([
                         DatePicker::make('booking_date')->default(now()),
-                        
+
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -159,46 +160,48 @@ class BookingResource extends Resource
                                 $data['booking_date'],
                                 fn (Builder $query, $date): Builder => $query->whereDate('booking_date', '=', $date)
                             );
-                            
                     })
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                BulkAction::make('Change Booking Date')
-                ->form([
-                    DatePicker::make('booking_date')
-                    ->required()
-                ])
-                ->action(function(Collection $records, array $data): void {
-                    foreach ($records as $record) {
-                        $record->update([
-                            'booking_date' => $data['booking_date'],
-                            
-                        ]);
-                    }
-                    
-                }),
-                BulkAction::make('Assign to Agent')
-                ->form([
-                    Forms\Components\Select::make('agent_id')
-                        ->label('Agent Name')
-                        ->options(User::where('agent_type', 1)->pluck('full_name', 'id'))
-                        ->searchable()
-                        ->placeholder('Select Agent')
-                        ->preload()
-                        ->required(),
-                ])
-                ->action(function(Collection $records, array $data): void {
-                    foreach ($records as $record) {
-                        $record->update([
-                            'agent_id' => $data['agent_id'],
-                            
-                        ]);
-                    }
-                    
-                })
+                BulkActionGroup::make([
+
+                    BulkAction::make('Change Booking Date')
+                        ->form([
+                            DatePicker::make('booking_date')
+                                ->required()
+                        ])
+                        ->action(function (Collection $records, array $data): void {
+                            foreach ($records as $record) {
+                                $record->update([
+                                    'booking_date' => $data['booking_date'],
+
+                                ]);
+                            }
+                        }),
+                    BulkAction::make('Assign to Agent')
+                        ->form([
+                            Forms\Components\Select::make('agent_id')
+                                ->label('Agent Name')
+                                ->options(User::where('agent_type', 1)->pluck('full_name', 'id'))
+                                ->searchable()
+                                ->placeholder('Select Agent')
+                                ->preload()
+                                ->required(),
+                        ])
+                        ->action(function (Collection $records, array $data): void {
+                            foreach ($records as $record) {
+                                $record->update([
+                                    'agent_id' => $data['agent_id'],
+
+                                ]);
+                            }
+                        })
+                ])->label('Update Data')
+
+
             ]);
     }
 
