@@ -121,8 +121,7 @@ class BookingResource extends Resource
                 Tables\Columns\TextColumn::make('discount_id')
                     ->money('USD')
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_pickup')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('is_pickup'),
                 Tables\Columns\TextColumn::make('total_price')
                     ->money('USD')
                     ->sortable(),
