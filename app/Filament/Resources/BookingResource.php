@@ -166,7 +166,21 @@ class BookingResource extends Resource
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                BulkAction::make('Assign To Agent')
+                BulkAction::make('Change Booking Date')
+                ->form([
+                    DatePicker::make('booking_date')
+                    ->required()
+                ])
+                ->action(function(Collection $records, array $data): void {
+                    foreach ($records as $record) {
+                        $record->update([
+                            'booking_date' => $data['booking_date'],
+                            
+                        ]);
+                    }
+                    
+                }),
+                BulkAction::make('Assign to Agent')
                 ->form([
                     Forms\Components\Select::make('agent_id')
                         ->label('Agent Name')
