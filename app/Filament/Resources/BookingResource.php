@@ -164,7 +164,7 @@ class BookingResource extends Resource
                 BulkAction::make('Assign To Agent')
                 ->form([
                     Forms\Components\Select::make('agent_id')
-                        ->label('Status')
+                        ->label('Agent Name')
                         ->options(User::where('agent_type', 1)->pluck('full_name', 'id'))
                         ->searchable()
                         ->placeholder('Select Agent')
