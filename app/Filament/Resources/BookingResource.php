@@ -134,7 +134,7 @@ class BookingResource extends Resource
                 Tables\Columns\TextColumn::make('extracharge_amount')
                     ->numeric()
                     ->sortable(),
-                    Tables\Columns\TextColumn::make('sender.full_name')
+                    Tables\Columns\TextColumn::make('user.full_name')
                     ->label('Agent Name')
                     ->sortable(),
 
