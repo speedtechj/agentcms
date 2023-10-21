@@ -17,7 +17,7 @@ class StatsOverview extends BaseWidget
             ->description('Total Box Today')
             ->descriptionIcon('heroicon-m-arrow-trending-up')
             ->chart([7, 2, 10, 3, 15, 4, 17])
-            ->color('success'),
+            ->color('info'),
             Stat::make('Total Box', Booking::where('is_pickup', 1)
             ->where('booking_date', now()->format('Y-m-d'))
             ->where('agent_id', auth()->user()->id)
@@ -33,7 +33,7 @@ class StatsOverview extends BaseWidget
             ->description('Not Pickup Today')
             ->descriptionIcon('heroicon-m-arrow-trending-up')
             ->chart([7, 2, 10, 3, 15, 4, 17])
-            ->color('info'),
+            ->color('warning'),
         ];
     }
 }
