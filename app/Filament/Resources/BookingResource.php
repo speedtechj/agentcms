@@ -95,7 +95,7 @@ class BookingResource extends Resource
     {
         return $table
             ->columns([
-                Split::make([
+                // Split::make([
                     Tables\Columns\TextColumn::make('booking_invoice')
                         ->searchable(),
                     Tables\Columns\TextColumn::make('sender.full_name'),
@@ -138,12 +138,11 @@ class BookingResource extends Resource
                     Tables\Columns\TextColumn::make('extracharge_amount')
                         ->numeric()
                         ->sortable(),
-                    // Tables\Columns\TextColumn::make('user.full_name')
-                    // ->label('Agent Name')
-                    // ->sortable(),
+                    Tables\Columns\TextColumn::make('note')
+                    ->label('Note'),
                     Tables\Columns\TextColumn::make('payment_balance')
                         ->money('USD')
-                ])->from('sm')
+                // ])->from('sm')
             ])
             ->filters([
                 Filter::make('is_pickup')
