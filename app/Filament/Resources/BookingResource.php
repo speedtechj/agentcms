@@ -98,11 +98,18 @@ class BookingResource extends Resource
                 // Split::make([
                     Tables\Columns\TextColumn::make('booking_invoice')
                         ->searchable(),
-                    Tables\Columns\TextColumn::make('sender.full_name'),
+                    Tables\Columns\TextColumn::make('sender.full_name')
+                    ->searchable(),
                     Tables\Columns\TextColumn::make('senderaddress.address')
+                    ->searchable()
                         ->label('Address')
                         ->sortable(),
+                        Tables\Columns\TextColumn::make('senderaddress.postal_code')
+                        ->label('Postal Code')
+                        ->sortable()
+                        ->searchable(),
                     Tables\Columns\TextColumn::make('senderaddress.quadrant')
+                    ->searchable()
                         ->label('Quadrant')
                         ->sortable(),
                     Tables\Columns\TextColumn::make('sender.mobile_no')
