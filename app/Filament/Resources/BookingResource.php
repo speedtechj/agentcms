@@ -86,8 +86,8 @@ class BookingResource extends Resource
                     ->required(),
                 Forms\Components\Toggle::make('is_agent')
                     ->required(),
-                Forms\Components\TextInput::make('agentdiscount_id')
-                    ->numeric(),
+                // Forms\Components\TextInput::make('agentdiscount_id')
+                //     ->numeric(),
             ]);
     }
 
