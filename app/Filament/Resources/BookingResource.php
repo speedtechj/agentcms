@@ -127,9 +127,9 @@ class BookingResource extends Resource
                         ->sortable(),
                     Tables\Columns\TextColumn::make('user.full_name')
                         ->sortable(),
-                    Tables\Columns\TextColumn::make('booking_date')
-                        ->date()
-                        ->sortable(),
+                    // Tables\Columns\TextColumn::make('booking_date')
+                    //     ->date()
+                    //     ->sortable(),
                     Tables\Columns\TextColumn::make('start_time'),
                     Tables\Columns\TextColumn::make('end_time'),
                     Tables\Columns\TextColumn::make('discount_id')
