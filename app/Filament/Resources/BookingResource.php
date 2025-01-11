@@ -97,7 +97,7 @@ class BookingResource extends Resource
             ->columns([
                 Split::make([
                     Tables\Columns\TextColumn::make('booking_invoice')
-                    ->label('ambot')
+                   
                         ->searchable(),
                     Tables\Columns\TextColumn::make('sender.full_name')
                     ->searchable(),
@@ -111,7 +111,7 @@ class BookingResource extends Resource
                         ->searchable(),
                     Tables\Columns\TextColumn::make('senderaddress.quadrant')
                     ->searchable()
-                        ->label('Quadrant')
+                        ->label('Quadrantdfdsdfdsf')
                         ->sortable(),
                     Tables\Columns\TextColumn::make('sender.mobile_no')
                         ->label('Mobile Number')
