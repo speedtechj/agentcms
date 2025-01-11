@@ -37,6 +37,7 @@ class BookingResource extends Resource
                     ->required()
                     ->maxLength(191),
                 Forms\Components\TextInput::make('manual_invoice')
+                    ->label('ambot')
                     ->maxLength(191),
                 Forms\Components\TextInput::make('sender_id')
                     ->required()
