@@ -37,7 +37,6 @@ class BookingResource extends Resource
                     ->required()
                     ->maxLength(191),
                 Forms\Components\TextInput::make('manual_invoice')
-                    ->label('ambot')
                     ->maxLength(191),
                 Forms\Components\TextInput::make('sender_id')
                     ->required()
@@ -98,6 +97,7 @@ class BookingResource extends Resource
             ->columns([
                 Split::make([
                     Tables\Columns\TextColumn::make('booking_invoice')
+                    ->label('ambot')
                         ->searchable(),
                     Tables\Columns\TextColumn::make('sender.full_name')
                     ->searchable(),
