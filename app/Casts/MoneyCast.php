@@ -2,6 +2,7 @@
 
 namespace App\Casts;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 class MoneyCast implements CastsAttributes
@@ -9,7 +10,7 @@ class MoneyCast implements CastsAttributes
     /**
      * Cast the given value.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes
@@ -23,7 +24,7 @@ class MoneyCast implements CastsAttributes
     /**
      * Prepare the given value for storage.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes

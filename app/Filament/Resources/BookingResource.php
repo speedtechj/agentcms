@@ -2,37 +2,42 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use App\Models\User;
-use Filament\Tables;
-use App\Models\Booking;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use Filament\Resources\Resource;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Actions\BulkAction;
-use Filament\Forms\Components\DatePicker;
-use Filament\Tables\Columns\Layout\Split;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Actions\BulkActionGroup;
-use Illuminate\Database\Eloquent\Collection;
 use App\Filament\Resources\BookingResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BookingResource\RelationManagers;
+use App\Models\Booking;
+use App\Models\User;
+use BackedEnum;
+use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+
+use Filament\Tables;
+
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Spatie\LaravelIgnition\Http\Requests\UpdateConfigRequest;
 
 class BookingResource extends Resource
 {
     protected static ?string $model = Booking::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+   protected static string | BackedEnum | null $navigationIcon = Heroicon::OutlinedDocumentText;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\TextInput::make('catextracharge_id')
-                    ->numeric(),
+                  ->numeric(),
                 Forms\Components\TextInput::make('booking_invoice')
                     ->required()
                     ->maxLength(191),
@@ -97,7 +102,7 @@ class BookingResource extends Resource
             ->columns([
                 Split::make([
                     Tables\Columns\TextColumn::make('booking_invoice')
-                   
+
                         ->searchable(),
                     Tables\Columns\TextColumn::make('sender.full_name')
                     ->searchable(),
@@ -157,7 +162,7 @@ class BookingResource extends Resource
                     ->label('Not Pickup')
                     ->query(fn (Builder $query): Builder => $query->where('is_pickup', false))->default('false'),
                 Filter::make('created_at')
-                    ->form([
+                    ->schema([
                         DatePicker::make('booking_date')->default(now()),
 
                     ])
@@ -169,14 +174,16 @@ class BookingResource extends Resource
                             );
                     })
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
+            ->toolbarActions([
 
+                BulkActionGroup::make([
                     BulkAction::make('Change Booking Date')
-                        ->form([
+                        ->label('Change Booking Date')
+                        ->icon(Heroicon::Calendar)
+                        ->schema([
                             DatePicker::make('booking_date')
                                 ->required()
                         ])
@@ -189,7 +196,9 @@ class BookingResource extends Resource
                             }
                         }),
                     BulkAction::make('Assign to Agent')
-                        ->form([
+                        ->label('Assign to Agent')
+                        ->icon(Heroicon::User)
+                        ->schema([
                             Forms\Components\Select::make('agent_id')
                                 ->label('Agent Name')
                                 ->options(User::where('agent_type', 1)->pluck('full_name', 'id'))
@@ -206,7 +215,10 @@ class BookingResource extends Resource
                                 ]);
                             }
                         })
-                ])->label('Update Data')
+
+            ]),
+
+
 
 
             ]);

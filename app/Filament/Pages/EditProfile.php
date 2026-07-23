@@ -3,18 +3,18 @@
 namespace App\Filament\Pages;
 
 
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
 use Filament\Pages\Page;
-use Filament\Forms\Components\Grid;
 use Illuminate\Support\Facades\Hash;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 
 class EditProfile extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
     protected static bool $shouldRegisterNavigation = false;
-    protected static string $view = 'filament.pages.edit-profile';
+    protected string $view = 'filament.pages.edit-profile';
     public $first_name;
     public $last_name;
     public $email;

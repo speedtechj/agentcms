@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use Filament\Pages\Dashboard;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
@@ -29,9 +30,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('/')
             ->profile()
-            ->userMenuItems([ 
+            ->userMenuItems([
                 'profile' => MenuItem::make()->url(fn (): string => EditProfile::getUrl())
-            ]) 
+            ])
             ->login()
             ->colors([
                 'primary' => Color::Amber,
@@ -39,12 +40,12 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                // Widgets\AccountWidget::class,
-                // Widgets\FilamentInfoWidget::class,
+                Widgets\AccountWidget::class,
+                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
