@@ -138,9 +138,9 @@ class BookingResource extends Resource
                         ->sortable(),
                     Tables\Columns\TextColumn::make('start_time'),
                     Tables\Columns\TextColumn::make('end_time'),
-                    Tables\Columns\TextColumn::make('discount_id')
-                        ->money('USD')
-                        ->sortable(),
+                    // Tables\Columns\TextColumn::make('discount_id')
+                    //     ->money('USD')
+                    //     ->sortable(),
                     Tables\Columns\ToggleColumn::make('is_pickup')
                         ->sortable(),
                     Tables\Columns\TextColumn::make('total_inches')
